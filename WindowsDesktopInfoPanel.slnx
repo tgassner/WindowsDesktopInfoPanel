@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="WindowsDesktopInfoPanel/WindowsDesktopInfoPanel.csproj" />
+  <Project Path="WindowsDesktopInfoPanelCommon/WindowsDesktopInfoPanelCommon.csproj" />
+  <Project Path="WindowsDesktopInfoPanelConfigurator/WindowsDesktopInfoPanelConfigurator.csproj" />
+</Solution>
