@@ -35,23 +35,23 @@ namespace WindowsDesktopInfoPanelConfigurator
             }
 
             // UI-Elemente befüllen
-            //numWidth.Value = (decimal)_currentConfig.Width;
-            //numHeight.Value = (decimal)_currentConfig.Height;
-            //numTop.Value = (decimal)_currentConfig.Top;
-            //numMargin.Value = (decimal)_currentConfig.RightMargin;
-            //txtUrl.Text = _currentConfig.EspUrl;
-            //txtColor.Text = _currentConfig.BackgroundColor;
+            numWidth.Value = _currentConfig.Width;
+            numHeight.Value = _currentConfig.Height;
+            numTop.Value = _currentConfig.Top;
+            numMargin.Value = _currentConfig.RightMargin;
+            txtUrl.Text = _currentConfig.EspUrl;
+            txtColor.Text = _currentConfig.BackgroundColor;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             // Werte aus der UI zurück in das Objekt spielen
-            //_currentConfig.Width = (double)numWidth.Value;
-            //_currentConfig.Height = (double)numHeight.Value;
-            //_currentConfig.Top = (double)numTop.Value;
-            //_currentConfig.RightMargin = (double)numMargin.Value;
-            //_currentConfig.EspUrl = txtUrl.Text;
-            //_currentConfig.BackgroundColor = txtColor.Text;
+            _currentConfig.Width = (int)numWidth.Value;
+            _currentConfig.Height = (int)numHeight.Value;
+            _currentConfig.Top = (int)numTop.Value;
+            _currentConfig.RightMargin = (int)numMargin.Value;
+            _currentConfig.EspUrl = txtUrl.Text;
+            _currentConfig.BackgroundColor = txtColor.Text;
 
             try
             {
@@ -61,11 +61,17 @@ namespace WindowsDesktopInfoPanelConfigurator
                 File.WriteAllText(_configPath, json);
 
                 MessageBox.Show("Konfiguration erfolgreich gespeichert!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Exit();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Fehler beim Speichern: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

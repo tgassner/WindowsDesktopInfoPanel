@@ -95,6 +95,7 @@ namespace WindowsDesktopInfoPanel
 
                         // URL für den ESP merken
                         _espUrl = config.EspUrl;
+                        MessageBox.Show(json);
                     }
                 }
                 catch (Exception ex)

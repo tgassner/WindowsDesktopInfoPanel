@@ -6,11 +6,11 @@ namespace WindowsDesktopInfoPanelCommon
 {
     public class AppConfig
     {
-        public double Width { get; set; } = 300;
-        public double Height { get; set; } = 200;
-        public double Top { get; set; } = 40;
-        public double RightMargin { get; set; } = 20;
+        public int Width { get; set; } = 380;
+        public int Height { get; set; } = 260;
+        public int Top { get; set; } = 10;
+        public int RightMargin { get; set; } = 10;
         public string BackgroundColor { get; set; } = "#44000000";
-        public string EspUrl { get; set; } = "http://192.168.x.x/data";
+        public string EspUrl { get; set; } = "http://www.intern/smarthome/json.php";
     }
 }
