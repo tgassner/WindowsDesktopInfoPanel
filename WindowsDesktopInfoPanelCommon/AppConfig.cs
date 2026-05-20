@@ -12,5 +12,7 @@ namespace WindowsDesktopInfoPanelCommon
         public int RightMargin { get; set; } = 10;
         public string BackgroundColor { get; set; } = "#44000000";
         public string EspUrl { get; set; } = "http://www.intern/smarthome/json.php";
+        public bool ShowTime { get; set; } = true;
+        public bool ShowDate { get; set; } = true;
     }
 }

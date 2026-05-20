@@ -31,6 +31,7 @@ namespace WindowsDesktopInfoPanel
         private DispatcherTimer _timer;
         private static readonly HttpClient _httpClient = new HttpClient();
         private string _espUrl;
+        private long _lastSensorDataCallTicks = DateTime.MinValue.Ticks;
 
         // --- Win32 API Imports ---
         [DllImport("user32.dll")]
@@ -95,7 +96,7 @@ namespace WindowsDesktopInfoPanel
 
                         // URL für den ESP merken
                         _espUrl = config.EspUrl;
-                        MessageBox.Show(json);
+                        //MessageBox.Show(json);
                     }
                 }
                 catch (Exception ex)
@@ -142,12 +143,17 @@ namespace WindowsDesktopInfoPanel
 
         private void SetupTimers()
         {
-            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
             _timer.Tick += async (s, e) =>
             {
                 TxtTime.Text = DateTime.Now.ToString("HH:mm");
-                if (DateTime.Now.Second % 30 == 0) // Alle 30 Sek Sensoren laden
+                TxtDate.Text = DateTime.Now.ToLongDateString();
+                long nowTicks = DateTime.Now.Ticks;
+                long deltaTicks = nowTicks - _lastSensorDataCallTicks;
+                TimeSpan deltaTicksSpan = new TimeSpan(deltaTicks);
+                if (deltaTicksSpan.Seconds > 30) // Alle 30 Sek Sensoren laden
                 {
+                    _lastSensorDataCallTicks = nowTicks;
                     await UpdateSensorData();
                 }
             };
@@ -162,11 +168,26 @@ namespace WindowsDesktopInfoPanel
 
                 if (node != null)
                 {
-                    TxtTemp.Text = $"{node["aussen_temperatur"]} °C";
-                    TxtHum.Text = $"{node["aussen_luftfeuchte"]} %";
+                    double? tempVal = node["garage_aussen_temperatur"]?.GetValue<double?>();
+                    TxtTemp.Text = tempVal.HasValue
+                        ? $"{Math.Round(tempVal.Value, 1):F1} °C"
+                        : "- °C";
+
+                    double? humVal = node["garage_aussen_luftfeuchte"]?.GetValue<double?>();
+                    TxtHum.Text = humVal.HasValue
+                        ? $"{Math.Round(humVal.Value, 1):F1} %"
+                        : "- %";
+
+                    double? dewVal = node["garage_aussen_taupunkt"]?.GetValue<double?>();
+                    TxtDew.Text = dewVal.HasValue
+                        ? $"{Math.Round(dewVal.Value, 1):F1} %"
+                        : "- %";
                 }
             }
-            catch { /* Fehlerbehandlung */ }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
