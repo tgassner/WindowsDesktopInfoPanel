@@ -18,12 +18,12 @@
                         <DropShadowEffect BlurRadius="5" ShadowDepth="2" Opacity="0.8"/>
                     </TextBlock.Effect>
                 </TextBlock>
-                <TextBlock x:Name="TxtTime" FontSize="100" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Text="17:17">
+                <TextBlock x:Name="TxtTime" FontSize="100" Foreground="White" Margin="0,-20,0,-15" HorizontalAlignment="Center" FontWeight="Bold" Text="17:17">
                     <TextBlock.Effect>
                         <DropShadowEffect BlurRadius="5" ShadowDepth="2" Opacity="0.8"/>
                     </TextBlock.Effect>
                 </TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="TxtTemp" FontSize="50" Foreground="#FF00CCFF" Text="-- °C">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="5" ShadowDepth="2" Opacity="0.8"/>
