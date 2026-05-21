@@ -45,6 +45,10 @@ partial class Form1
         btnSave = new Button();
         btnCancel = new Button();
         colorDialog1 = new ColorDialog();
+        buttonSetAutostart = new Button();
+        buttonRemoveAutostart = new Button();
+        checkBoxShowTime = new CheckBox();
+        checkBoxShowDate = new CheckBox();
         ((System.ComponentModel.ISupportInitialize)numWidth).BeginInit();
         ((System.ComponentModel.ISupportInitialize)numHeight).BeginInit();
         ((System.ComponentModel.ISupportInitialize)numTop).BeginInit();
@@ -163,7 +167,7 @@ partial class Form1
         // 
         // btnSave
         // 
-        btnSave.Location = new Point(23, 281);
+        btnSave.Location = new Point(23, 383);
         btnSave.Margin = new Padding(3, 4, 3, 4);
         btnSave.Name = "btnSave";
         btnSave.Size = new Size(206, 47);
@@ -174,7 +178,7 @@ partial class Form1
         // 
         // btnCancel
         // 
-        btnCancel.Location = new Point(235, 281);
+        btnCancel.Location = new Point(235, 383);
         btnCancel.Name = "btnCancel";
         btnCancel.Size = new Size(147, 47);
         btnCancel.TabIndex = 13;
@@ -182,11 +186,59 @@ partial class Form1
         btnCancel.UseVisualStyleBackColor = true;
         btnCancel.Click += btnCancel_Click;
         // 
+        // buttonSetAutostart
+        // 
+        buttonSetAutostart.Location = new Point(727, 14);
+        buttonSetAutostart.Name = "buttonSetAutostart";
+        buttonSetAutostart.Size = new Size(175, 47);
+        buttonSetAutostart.TabIndex = 14;
+        buttonSetAutostart.Text = "Set Autostart";
+        buttonSetAutostart.UseVisualStyleBackColor = true;
+        buttonSetAutostart.Click += buttonSetAutostart_Click;
+        // 
+        // buttonRemoveAutostart
+        // 
+        buttonRemoveAutostart.Location = new Point(727, 67);
+        buttonRemoveAutostart.Name = "buttonRemoveAutostart";
+        buttonRemoveAutostart.Size = new Size(175, 47);
+        buttonRemoveAutostart.TabIndex = 15;
+        buttonRemoveAutostart.Text = "Remove Autostart";
+        buttonRemoveAutostart.UseVisualStyleBackColor = true;
+        buttonRemoveAutostart.Click += buttonRemoveAutostart_Click;
+        // 
+        // checkBoxShowTime
+        // 
+        checkBoxShowTime.AutoSize = true;
+        checkBoxShowTime.Checked = true;
+        checkBoxShowTime.CheckState = CheckState.Checked;
+        checkBoxShowTime.Location = new Point(214, 295);
+        checkBoxShowTime.Name = "checkBoxShowTime";
+        checkBoxShowTime.Size = new Size(104, 24);
+        checkBoxShowTime.TabIndex = 16;
+        checkBoxShowTime.Text = "Show Time";
+        checkBoxShowTime.UseVisualStyleBackColor = true;
+        // 
+        // checkBoxShowDate
+        // 
+        checkBoxShowDate.AutoSize = true;
+        checkBoxShowDate.Checked = true;
+        checkBoxShowDate.CheckState = CheckState.Checked;
+        checkBoxShowDate.Location = new Point(214, 339);
+        checkBoxShowDate.Name = "checkBoxShowDate";
+        checkBoxShowDate.Size = new Size(103, 24);
+        checkBoxShowDate.TabIndex = 17;
+        checkBoxShowDate.Text = "Show Date";
+        checkBoxShowDate.UseVisualStyleBackColor = true;
+        // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(914, 600);
+        Controls.Add(checkBoxShowDate);
+        Controls.Add(checkBoxShowTime);
+        Controls.Add(buttonRemoveAutostart);
+        Controls.Add(buttonSetAutostart);
         Controls.Add(btnCancel);
         Controls.Add(btnSave);
         Controls.Add(txtColor);
@@ -232,4 +284,8 @@ partial class Form1
     private Button btnSave;
     private Button btnCancel;
     private ColorDialog colorDialog1;
+    private Button buttonSetAutostart;
+    private Button buttonRemoveAutostart;
+    private CheckBox checkBoxShowTime;
+    private CheckBox checkBoxShowDate;
 }

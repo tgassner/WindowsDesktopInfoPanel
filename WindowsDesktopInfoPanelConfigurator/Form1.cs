@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.Win32;
 using WindowsDesktopInfoPanelCommon;
 
 namespace WindowsDesktopInfoPanelConfigurator
@@ -52,6 +53,8 @@ namespace WindowsDesktopInfoPanelConfigurator
             _currentConfig.RightMargin = (int)numMargin.Value;
             _currentConfig.EspUrl = txtUrl.Text;
             _currentConfig.BackgroundColor = txtColor.Text;
+            _currentConfig.ShowTime = checkBoxShowTime.Checked;
+            _currentConfig.ShowDate = checkBoxShowDate.Checked;
 
             try
             {
@@ -72,6 +75,67 @@ namespace WindowsDesktopInfoPanelConfigurator
         private void btnCancel_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void buttonSetAutostart_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Pfad zur Registry-Node für den aktuellen Benutzer
+                using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+
+                if (key != null)
+                {
+                    // Pfad zur WPF-Hauptanwendung ermitteln
+                    // Da beide EXEs im selben BuildOutput-Ordner liegen, tauschen wir einfach den Dateinamen
+                    string wpfExePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WindowsDesktopInfoPanel.exe");
+
+                    if (File.Exists(wpfExePath))
+                    {
+                        // Eintrag in die Registry schreiben (Name des Eintrags, Pfad zur EXE)
+                        key.SetValue("WindowsDesktopInfoPanel", $"\"{wpfExePath}\"");
+
+                        MessageBox.Show("Autostart erfolgreich eingerichtet!", "Erfolg", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Die Datei 'WindowsDesktopInfoPanel.exe' wurde im aktuellen Verzeichnis nicht gefunden.\n" +
+                                        "Bitte stelle sicher, dass beide Programme im selben Ordner liegen.",
+                            "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Schreiben in die Registry: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonRemoveAutostart_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+
+                if (key != null)
+                {
+                    // Prüfen, ob der Eintrag überhaupt existiert
+                    if (key.GetValue("WindowsDesktopInfoPanel") != null)
+                    {
+                        // Eintrag löschen
+                        key.DeleteValue("WindowsDesktopInfoPanel");
+                        MessageBox.Show("Autostart erfolgreich entfernt!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Es war kein Autostart-Eintrag vorhanden.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fehler beim Löschen aus der Registry: {ex.Message}", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

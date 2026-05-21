@@ -67,6 +67,7 @@ namespace WindowsDesktopInfoPanel
         {
             LoadConfiguration();
             EmbedInDesktop();
+            TimerHandler();
         }
 
         private void LoadConfiguration()
@@ -83,6 +84,16 @@ namespace WindowsDesktopInfoPanel
 
                     if (config != null)
                     {
+                        if (!config.ShowDate)
+                        {
+                            TxtDate.Visibility = Visibility.Collapsed;
+                        }
+
+                        if (!config.ShowTime)
+                        {
+                            TxtTime.Visibility = Visibility.Collapsed;
+                        }
+
                         // Werte anwenden
                         this.Width = config.Width;
                         this.Height = config.Height;
@@ -144,20 +155,22 @@ namespace WindowsDesktopInfoPanel
         private void SetupTimers()
         {
             _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
-            _timer.Tick += async (s, e) =>
-            {
-                TxtTime.Text = DateTime.Now.ToString("HH:mm");
-                TxtDate.Text = DateTime.Now.ToLongDateString();
-                long nowTicks = DateTime.Now.Ticks;
-                long deltaTicks = nowTicks - _lastSensorDataCallTicks;
-                TimeSpan deltaTicksSpan = new TimeSpan(deltaTicks);
-                if (deltaTicksSpan.Seconds > 30) // Alle 30 Sek Sensoren laden
-                {
-                    _lastSensorDataCallTicks = nowTicks;
-                    await UpdateSensorData();
-                }
-            };
+            _timer.Tick += async (s, e) => { await TimerHandler(); };
             _timer.Start();
+        }
+
+        private async Task TimerHandler()
+        {
+            TxtTime.Text = DateTime.Now.ToString("HH:mm");
+            TxtDate.Text = DateTime.Now.ToLongDateString();
+            long nowTicks = DateTime.Now.Ticks;
+            long deltaTicks = nowTicks - _lastSensorDataCallTicks;
+            TimeSpan deltaTicksSpan = new TimeSpan(deltaTicks);
+            if (deltaTicksSpan.Seconds > 30) // Alle 30 Sek Sensoren laden
+            {
+                _lastSensorDataCallTicks = nowTicks;
+                await UpdateSensorData();
+            }
         }
 
         private async Task UpdateSensorData()
