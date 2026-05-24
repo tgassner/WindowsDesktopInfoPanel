@@ -199,7 +199,9 @@ namespace WindowsDesktopInfoPanel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                TxtTemp.Text = "- °C";
+                TxtHum.Text = "- %";
+                TxtDew.Text = "- %";
             }
         }
     }

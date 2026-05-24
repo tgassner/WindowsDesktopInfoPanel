@@ -8,7 +8,12 @@
     <UseWPF>true</UseWPF>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>$(SolutionDir)BuildOutput\</OutputPath>
+    <ApplicationIcon>WindowsDesktopInfoPanelIcon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="WindowsDesktopInfoPanelIcon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WindowsDesktopInfoPanelCommon\WindowsDesktopInfoPanelCommon.csproj" />

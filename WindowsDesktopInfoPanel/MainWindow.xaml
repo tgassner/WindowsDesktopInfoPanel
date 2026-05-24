@@ -10,10 +10,9 @@
         Topmost="False">
 
     <Grid>
-        <!-- Ein Panel mit leichtem Glow oder Hintergrund für Lesbarkeit -->
         <Border x:Name="MainBorder" CornerRadius="10" Background="#44000000" Margin="10">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock x:Name="TxtDate" FontSize="20" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Text="Knedltog 26.04.1986">
+                <TextBlock x:Name="TxtDate" FontSize="20" Foreground="White" HorizontalAlignment="Center" FontWeight="Bold" Text="Knödeltag 26.04.1986">
                     <TextBlock.Effect>
                         <DropShadowEffect BlurRadius="5" ShadowDepth="2" Opacity="0.8"/>
                     </TextBlock.Effect>
